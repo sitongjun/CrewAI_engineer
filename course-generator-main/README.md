@@ -2,7 +2,7 @@
 
 **A production-ready example of CrewAI's Flow + Crew hybrid pattern** — demonstrating how to combine orchestration logic with multi-agent collaboration.
 
-Give it a topic, get a complete lesson package: curriculum, content, quizzes, and reviewed code examples.
+Give it a topic, and five agents research the web, design the curriculum, write the lesson, create quizzes, and review the code examples.
 
 [![CrewAI](https://img.shields.io/badge/Built%20with-CrewAI-coral)](https://crewai.com)
 [![Python 3.10+](https://img.shields.io/badge/Python-3.10+-blue.svg)](https://python.org)
@@ -17,34 +17,11 @@ This project showcases the **Flow + Crew hybrid pattern** — the recommended ar
 - **Flow** handles orchestration: validation, routing, retries, state management
 - **Crew** handles execution: multi-agent collaboration on complex tasks
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                         FLOW LAYER                          │
-│  ┌──────────┐    ┌──────────┐    ┌──────────┐              │
-│  │ Validate │ →  │  Route   │ →  │ Finalize │              │
-│  └──────────┘    └────┬─────┘    └──────────┘              │
-│                       │                 ↑                   │
-│                       ▼                 │                   │
-│              ┌────────────────┐         │                   │
-│              │   CREW LAYER   │─────────┘                   │
-│              │                │                             │
-│              │  ┌──────────┐  │                             │
-│              │  │ Architect│  │                             │
-│              │  └────┬─────┘  │                             │
-│              │       ↓        │                             │
-│              │  ┌──────────┐  │                             │
-│              │  │  Writer  │  │                             │
-│              │  └────┬─────┘  │                             │
-│              │       ↓        │                             │
-│              │  ┌──────────┐  │                             │
-│              │  │Quiz Master│ │                             │
-│              │  └────┬─────┘  │                             │
-│              │       ↓        │                             │
-│              │  ┌──────────┐  │                             │
-│              │  │ Reviewer │  │                             │
-│              │  └──────────┘  │                             │
-│              └────────────────┘                             │
-└─────────────────────────────────────────────────────────────┘
+```text
+FLOW: Validate → Generate with Crew → Quality Route → Finalize / Revise
+
+CREW: Web Research → Curriculum Architect → Content Writer
+                    → Quiz Master → Code Reviewer
 ```
 
 ### Why This Pattern?
@@ -66,8 +43,8 @@ This project showcases the **Flow + Crew hybrid pattern** — the recommended ar
 
 ```bash
 # Clone the repository
-git clone https://github.com/crewAIInc/course-generator-flow.git
-cd course-generator-flow
+git clone https://github.com/sitongjun/CrewAI_engineer.git
+cd CrewAI_engineer/course-generator-main
 
 # Create virtual environment
 python -m venv .venv
@@ -76,8 +53,9 @@ source .venv/bin/activate  # or `.venv\Scripts\activate` on Windows
 # Install dependencies
 pip install -e .
 
-# Set your API key
-export OPENAI_API_KEY="your-key-here"
+# Configure both the LLM and Web Research tools
+export DEEPSEEK_API_KEY="your-deepseek-key"
+export SERPER_API_KEY="your-serper-key"
 ```
 
 ### Generate Your First Course
@@ -97,10 +75,11 @@ python -m src.main "Agent Memory Systems" --flow --difficulty advanced --output 
 
 ## 🏗️ Architecture
 
-### The Crew (4 Specialized Agents)
+### The Crew (5 Specialized Agents)
 
 | Agent | Role | Responsibility |
 |-------|------|----------------|
+| 🌐 **Web Researcher** | Research Specialist | Uses Serper and website scraping to collect current sources before course design |
 | 📐 **Curriculum Architect** | Instructional Designer | Plans structure, defines learning objectives |
 | ✍️ **Content Writer** | Technical Writer | Creates lessons, explanations, code examples |
 | 🎯 **Quiz Master** | Assessment Specialist | Designs questions and hands-on exercises |
