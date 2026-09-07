@@ -1,0 +1,12 @@
+.env
+.venv/
+venv/
+venv_py310_ssl_broken/
+.data/
+data/uploads/*
+!data/uploads/.gitkeep
+output/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.idea/

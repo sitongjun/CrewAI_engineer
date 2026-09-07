@@ -7,6 +7,7 @@
 | 项目 | 一句话说明 |
 |---|---|
 | [Course Generator](./course-generator-main/) | 输入课程主题，由多个 Agent 依次完成资料搜索、课程规划、内容编写、测验设计和代码审查。 |
+| [Health Record RAG](./health-record-rag/) | 健康档案 PDF 先离线灌入本地 Chroma，再由两个 Agent 在线检索并生成 Markdown 报告。 |
 
 ## 仓库维护约定
 
@@ -82,4 +83,23 @@ python -m src.main "CrewAI Flow Tutorial" --flow
 
 ---
 
-更新日期：2026-09-03
+## Health Record RAG 学习记录
+
+当前执行链路：
+
+```text
+离线：PDF → 切块 → Embedding → 本地 Chroma
+在线：用户问题 → 检索 Agent → 报告 Agent → output/health_report.md
+```
+
+已完成的实践：
+
+- 把官方 `PDFSearchTool` 的「构造时灌库」拆成独立 ingest 与在线检索。
+- 用 FastAPI 提供上传灌库、知识库查看和 OpenAI 兼容问答接口；没有 FastAPI 也能用命令行跑通。
+- 处理 DashScope Embedding 对长文本超时：官方软切后再做 350 字硬上限。
+
+详细说明参见 [health-record-rag/README.md](./health-record-rag/README.md)。
+
+---
+
+更新日期：2026-09-07

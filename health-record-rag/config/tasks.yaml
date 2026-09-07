@@ -1,0 +1,23 @@
+retrieval_task:
+  description: >
+    回答问题：{topic}。
+    必须调用 Search ingested health records 工具检索已经灌库的健康档案，不得依赖记忆编造患者信息。
+    不要上传或解析 PDF，检索工具只会查本地知识库。
+    归纳检索到的相关事实；如果档案证据不足，要明确写出“档案证据不足”。
+  expected_output: >
+    中文检索摘要，包括相关档案事实、与问题的关联，以及证据不足之处。
+  agent: retrieval_agent
+
+report_task:
+  description: >
+    根据上一任务的检索结果和问题 {topic} 编写中文 Markdown 健康信息报告。
+    报告包含：问题概述、档案相关事实、谨慎分析、建议、风险提示。
+    不得诊断疾病，不得编造档案数据。
+    完成后必须调用 File Writer Tool，参数固定为：
+    filename="health_report.md"、directory="output"、overwrite=true，content 为完整报告。
+    最终回答也要包含完整报告，并在末尾说明已保存到 output/health_report.md。
+  expected_output: >
+    一份已经保存到 output/health_report.md 的完整中文 Markdown 健康信息报告。
+  agent: report_agent
+  context:
+    - retrieval_task
