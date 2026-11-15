@@ -1,13 +1,17 @@
-# CrewAI Engineer 学习仓库
+# CrewAI Engineer：多智能体与 RAG 工程实践
 
-用于记录我学习 CrewAI、多 Agent、Flow 和企业级 AI 工程的实践过程。
+> Hands-on practice with multi-agent LLM systems using CrewAI: a five-agent course-generation pipeline orchestrated by a Flow (validation, quality routing, retries), and a health-record RAG service that separates offline ingestion from online retrieval behind an OpenAI-compatible FastAPI endpoint.
 
-## 项目索引
+这个仓库记录我学习 CrewAI、多智能体编排、Flow 和 RAG 工程的实践过程。每个项目放在独立文件夹里，有各自的 README。
 
-| 项目 | 一句话说明 |
-|---|---|
-| [Course Generator](./course-generator-main/) | 输入课程主题，由多个 Agent 依次完成资料搜索、课程规划、内容编写、测验设计和代码审查。 |
-| [Health Record RAG](./health-record-rag/) | 健康档案 PDF 先离线灌入本地 Chroma，再由两个 Agent 在线检索并生成 Markdown 报告。 |
+## 项目
+
+| 项目 | 做了什么 | 关键点 |
+|---|---|---|
+| [Course Generator](./course-generator-main/) | 输入课程主题，五个 Agent 依次完成资料搜索、课程规划、内容编写、测验设计和代码审查 | 在示例项目基础上增加 Web Research Agent（Serper 搜索 + 网页抓取）；外层 Flow 负责输入校验、状态保存、质量路由与重试；模型换成 DeepSeek |
+| [Health Record RAG](./health-record-rag/) | 健康档案 PDF 离线写入本地 Chroma，在线由检索 Agent 和报告 Agent 生成中文 Markdown 报告 | 把官方 `PDFSearchTool` “构造时灌库”拆成独立的 ingest 与检索；解决 DashScope Embedding 长文本超时（软切后再加 350 字硬上限）；FastAPI 提供上传灌库、知识库查看和 OpenAI 兼容问答接口 |
+
+示例数据中的健康档案为虚构人物，不含真实个人信息。
 
 ## 仓库维护约定
 
